@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "cstdint": "c",
+        "stdlib.h": "c",
+        "stdint.h": "c",
+        "pic.h": "c",
+        "keyboard.h": "c"
+    }
+}
