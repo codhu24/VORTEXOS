@@ -6,7 +6,11 @@ ASFLAGS = -f elf32
 LD = ld
 LDFLAGS = -m elf_i386 -T linker.ld
 
+<<<<<<< HEAD
 OBJS = boot.o kernel.o vesa.o interrupts.o pic.o interrupts_asm.o tss.o gdt.o gdt_asm.o keyboard.o shell.o string.o
+=======
+OBJS = boot.o kernel.o vesa.o interrupts.o pic.o interrupts_asm.o tss.o gdt.o gdt_asm.o keyboard.o
+>>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 ISO = vortexos.iso
 
 # Build everything

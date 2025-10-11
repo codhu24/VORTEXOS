@@ -4,11 +4,15 @@
 #include "gdt.h"
 #include "tss.h"
 #include "keyboard.h"
+<<<<<<< HEAD
 #include "shell.h"
 
 extern uint32_t stack_top;
 void draw_dashboard(void);
 int handle_dashboard_input(void);
+=======
+extern uint32_t stack_top;
+>>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 void write_string(int color, const char* str) {
     volatile char* video_memory = (volatile char*)0xB8000;
     while(*str) {
@@ -20,6 +24,7 @@ void write_string(int color, const char* str) {
     }
 }
 
+<<<<<<< HEAD
 void draw_dashboard(void) {
     fill_screen(0x00333333); // Dark gray background
     
@@ -47,6 +52,9 @@ void draw_dashboard(void) {
     draw_string(300, 400, "Press 'S' to launch Shell", 0xFFFFFF00);
     draw_string(300, 420, "Press 'Q' to quit applications", 0xFFFFFF00);
 }
+=======
+
+>>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 
 void kernel_main(uint32_t magic, uint32_t mb_info) {
     // The correct initialization order
@@ -66,13 +74,19 @@ void kernel_main(uint32_t magic, uint32_t mb_info) {
     init_vesa(magic, mb_info);
     
     // Draw to the screen
+<<<<<<< HEAD
     draw_dashboard();    //draw_string(300, 300, "Hello VortexOS",  0xFF000000); // White text
+=======
+    fill_screen(0x00FFFFFF);
+    //draw_string(300, 300, "Hello VortexOS",  0xFF000000); // White text
+>>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 
     // White text
 
     // Simple keyboard test
     int y_pos = 320;
     int x_pos=300;
+<<<<<<< HEAD
     while (1) {
         if (keyboard_has_input()) {
             char c = keyboard_getchar();
@@ -89,4 +103,19 @@ void kernel_main(uint32_t magic, uint32_t mb_info) {
             }
         }
     }
+=======
+    while(1) {
+        if (keyboard_has_input()) {
+            char c = keyboard_getchar();
+            if (c == '\n') {
+                y_pos += 10;  // New line
+            } else if (c != 0) {
+                // Draw the character
+                char str[2] = {c, '\0'};
+                draw_string(x_pos, y_pos, str,  0xFF000000);
+                x_pos+=8;
+            }
+        }
+}
+>>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 }

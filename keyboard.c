@@ -73,6 +73,7 @@ else
     case 0x38:
     alt_pressed=1;
     break;
+<<<<<<< HEAD
 //   case 0x0E: // Backspace
 //     if(buff_ind < sizeof(intput_buff) - 1) {
 //         intput_buff[buff_ind++] = '\b';  // Force ASCII backspace character
@@ -90,6 +91,21 @@ case 0x1C://enter
     if(buff_ind < sizeof(intput_buff) - 1) {
         intput_buff[buff_ind++] = '\n';
         intput_buff[buff_ind] = '\0';
+=======
+    case 0x0E:
+    if(buff_ind>0)
+    {
+        buff_ind--;
+        intput_buff[buff_ind]='\0';
+    }
+    break;
+    case 0x1C://enter
+    if(buff_ind<sizeof(intput_buff)-1)
+    {
+        intput_buff[buff_ind++]='\n';
+        intput_buff[buff_ind]='\0';
+
+>>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
     }
     break;
             default:
