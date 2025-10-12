@@ -1,3 +1,4 @@
+//Defines the C structure (tss_entry) that matches the hardware-defined layout of a TSS.
 #ifndef TSS_H
 #define TSS_H
 

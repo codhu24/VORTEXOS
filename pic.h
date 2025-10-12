@@ -1,3 +1,5 @@
+//pic.h
+//Declares the functions that other parts of the OS can use to interact with the PIC
 #ifndef PIC_H
 #define PIC_H
 

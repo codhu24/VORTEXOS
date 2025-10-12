@@ -1,3 +1,9 @@
+//pic.c
+//pic_remap: This is a crucial function that re-programs the PIC. By default, the PIC sends interrupt signals that conflict with the CPU's own internal exceptions. This function tells the PIC to send its signals to a different, non-conflicting range.
+
+//pic_send_eoi: After an interrupt is handled, this function sends an "End of Interrupt" signal to the PIC, telling it that it's okay to send the next interrupt.
+
+//pic_set_mask / pic_clear_mask: These functions allow you to enable or disable specific interrupt lines.
 #include "pic.h"
 #include "port.h"
 #define PIC1_COMMAND 0x20

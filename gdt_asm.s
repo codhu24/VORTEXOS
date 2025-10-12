@@ -1,4 +1,6 @@
 ; gdt_asm.s
+;Contains a tiny but critical piece of assembly code, gdt_flush. After the GDT is created in C, this function is called to load the GDT's location 
+;into a special CPU register (lgdt) and then reload all the segment registers to start using the new memory rules.
 section .text
 global gdt_flush
 

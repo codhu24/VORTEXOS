@@ -1,5 +1,5 @@
-// newos/gdt.c
-
+//gdt.c
+// Contains the C code to create the GDT and populate it with entries. The init_gdt function sets up segments for kernel code, kernel data, user code, and user data.
 #include "gdt.h"
 #include "tss.h"
 

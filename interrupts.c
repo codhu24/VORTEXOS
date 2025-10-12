@@ -1,3 +1,5 @@
+//This is the central dispatcher. The init_idt function fills all 256 entries of the IDT, pointing them to the assembly stubs. It also contains the high-level C functions isr_handler (for CPU exceptions) 
+//and irq_handler (for hardware interrupts), which are called by the assembly stubs.
 #include "interrupts.h"
 #include "vesa.h"
 #include "tss.h"

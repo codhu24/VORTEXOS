@@ -1,5 +1,6 @@
 // newos/tss.c
-
+// Contains the init_tss function. This function sets up a GDT entry for the TSS, zeroes out the TSS structure itself, and most importantly, sets the ss0 (kernel stack segment) 
+//and esp0 (kernel stack pointer) fields. Finally, it loads the TSS into the CPU's Task Register (ltr).
 #include "tss.h"
 #include <stddef.h> // For NULL
 

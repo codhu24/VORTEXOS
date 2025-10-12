@@ -1,3 +1,5 @@
+//Defines the C structures for an IDT entry (idt_gate), the IDT pointer (idt_ptr), and the interrupt_frame, 
+//which allows your C code to easily access the registers saved on the stack during an interrupt.
 #ifndef INTERRUPTS_H
 #define INTERRUPTS_H
 #include <stdint.h>
