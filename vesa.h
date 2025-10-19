@@ -2,21 +2,14 @@
 //uint32_t,16_t,8_t means giving a fix size to int because int could be of 32,64.. this helps in memory management
 //sttribute packed ki padding bytes add na ho compiler ki tarafse
 //all the struct are on the basis of vbe[vesa] standards 
-<<<<<<< HEAD
 // vesa.h
-=======
->>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 #ifndef VESA_H
 #define VESA_H
 
 #include <stdint.h>
-<<<<<<< HEAD
 
 uint32_t get_multiboot_info(uint32_t magic, uint32_t *info);
 
-=======
-uint32_t get_multiboot_info(uint32_t magic, uint32_t *info);
->>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 // VBE Info Block structure
 struct vbe_info_block {
     char signature[4];
@@ -84,7 +77,6 @@ struct framebuffer {
 };
 
 extern struct framebuffer fb;
-<<<<<<< HEAD
 
 // Font size control
 void set_font_size(uint8_t size);
@@ -92,19 +84,13 @@ uint8_t get_font_size(void);
 uint32_t get_char_width(void);
 uint32_t get_char_height(void);
 
-=======
->>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 void init_vesa(uint32_t magic, uint32_t mb_info);
 void fill_screen(uint32_t color);
 void set_pixel(uint32_t x, uint32_t y, uint32_t color);
 void draw_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint32_t color);
 void draw_char(uint32_t x, uint32_t y, char c, uint32_t color);
 void draw_string(uint32_t x, uint32_t y, const char* str, uint32_t color);
-<<<<<<< HEAD
 void draw_char_scaled(uint32_t x, uint32_t y, char c, uint32_t color, uint8_t scale);
 void draw_string_scaled(uint32_t x, uint32_t y, const char* str, uint32_t color, uint8_t scale);
 void fill_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint32_t color);
-=======
-
->>>>>>> a84c6a9bdb5af7d08c841c79da2d954bc62f049b
 #endif

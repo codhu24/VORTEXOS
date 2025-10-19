@@ -5,6 +5,6 @@
         "stdint.h": "c",
         "pic.h": "c",
         "keyboard.h": "c",
-        "tss.h": "c"
+        "shell.h": "c"
     }
 }

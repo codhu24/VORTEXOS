@@ -4,7 +4,7 @@
 #include "interrupts.h"
 #include "pic.h"
 static const char scancodes[] = {
-    0,  0, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 0,  0,
+    0,  0x1B, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 0,  0,
     'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\n', 0,
     'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '`', 0, '\\',
     'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 0, '*', 0, ' ', 0,
@@ -14,7 +14,7 @@ static const char scancodes[] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 static const char scancodes_shift[] = {
-    0,  0, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 0,  0,
+    0,  0x1B, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 0,  0,
     'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\n', 0,
     'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~', 0, '|',
     'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', 0, '*', 0, ' ', 0,
@@ -64,6 +64,14 @@ else
     case 0x36:
     shift_pressed=1;
     break;
+    case 0x01:
+    if(buff_ind<sizeof(intput_buff)-1)
+    {
+        intput_buff[buff_ind++]=0x1B;//ASCII ESC
+
+        intput_buff[buff_ind]='\0';
+    }
+    break;
     case 0x3A:
     caps_lock=!caps_lock;
     break;
@@ -90,19 +98,6 @@ case 0x1C://enter
     if(buff_ind < sizeof(intput_buff) - 1) {
         intput_buff[buff_ind++] = '\n';
         intput_buff[buff_ind] = '\0';
-    case 0x0E:
-    if(buff_ind>0)
-    {
-        buff_ind--;
-        intput_buff[buff_ind]='\0';
-    }
-    break;
-    case 0x1C://enter
-    if(buff_ind<sizeof(intput_buff)-1)
-    {
-        intput_buff[buff_ind++]='\n';
-        intput_buff[buff_ind]='\0';
-
     }
     break;
             default:
@@ -126,7 +121,7 @@ case 0x1C://enter
 if(scancode!=0){
     pic_send_eoi(1);
 }
-}
+
 }
 void init_keyboard()
 {

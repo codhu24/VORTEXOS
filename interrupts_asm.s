@@ -1,5 +1,3 @@
-;This is the first responder. It contains the low-level assembly "stubs" (isr0, irq1, etc.). When an interrupt fires, the CPU jumps to one of these stubs. The stub's job is to save all the CPU registers 
-;and then call the main C handler (isr_handler or irq_handler).
 section .text
 
 ; Macro for ISR without error code

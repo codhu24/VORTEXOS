@@ -1,5 +1,3 @@
-//Defines the C structures for an IDT entry (idt_gate), the IDT pointer (idt_ptr), and the interrupt_frame, 
-//which allows your C code to easily access the registers saved on the stack during an interrupt.
 #ifndef INTERRUPTS_H
 #define INTERRUPTS_H
 #include <stdint.h>
@@ -42,4 +40,6 @@ void irq_uninstall(int irq);
 void isr_install();
 void irq_install();
 void load_tss();
+// Add this to interrupts.h
+void timer_handler(struct interrupt_frame *frame);
 #endif

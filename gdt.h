@@ -1,5 +1,4 @@
 // gdt.h
-//Defines the C structures for a GDT entry (gdt_entry) and the GDT pointer (gdt_ptr), which tells the CPU where the GDT is located in memory.
 #ifndef GDT_H
 #define GDT_H
 
