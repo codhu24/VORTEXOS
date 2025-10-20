@@ -187,7 +187,38 @@ void fill_screen(uint32_t color) {
         pixel[i] = color;
     }
 }
+// Add this function to vesa.c
+uint32_t interpolate_color(uint32_t color1, uint32_t color2, uint32_t step, uint32_t total_steps) {
+    if (total_steps == 0) return color1;
+    
+    float ratio = (float)step / total_steps;
+    
+    uint8_t r1 = (color1 >> 16) & 0xFF;
+    uint8_t g1 = (color1 >> 8) & 0xFF;
+    uint8_t b1 = color1 & 0xFF;
+    
+    uint8_t r2 = (color2 >> 16) & 0xFF;
+    uint8_t g2 = (color2 >> 8) & 0xFF;
+    uint8_t b2 = color2 & 0xFF;
+    
+    uint8_t r = r1 + (r2 - r1) * ratio;
+    uint8_t g = g1 + (g2 - g1) * ratio;
+    uint8_t b = b1 + (b2 - b1) * ratio;
+    
+    return (0xFF << 24) | (r << 16) | (g << 8) | b;
+}
 
+void draw_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint32_t color) {
+    // Draw rectangle outline
+    for (uint32_t i = 0; i < width; i++) {
+        set_pixel(x + i, y, color);
+        set_pixel(x + i, y + height - 1, color);
+    }
+    for (uint32_t i = 0; i < height; i++) {
+        set_pixel(x, y + i, color);
+        set_pixel(x + width - 1, y + i, color);
+    }
+}
 void init_vesa(uint32_t magic, uint32_t mb_info_ptr) {
     struct multiboot_info *mbi = (struct multiboot_info *)mb_info_ptr;
 

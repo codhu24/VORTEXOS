@@ -92,5 +92,9 @@ void draw_char(uint32_t x, uint32_t y, char c, uint32_t color);
 void draw_string(uint32_t x, uint32_t y, const char* str, uint32_t color);
 void draw_char_scaled(uint32_t x, uint32_t y, char c, uint32_t color, uint8_t scale);
 void draw_string_scaled(uint32_t x, uint32_t y, const char* str, uint32_t color, uint8_t scale);
+
+// Add these to vesa.h
+uint32_t interpolate_color(uint32_t color1, uint32_t color2, uint32_t step, uint32_t total_steps);
+void draw_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint32_t color);
 void fill_rect(uint32_t x, uint32_t y, uint32_t width, uint32_t height, uint32_t color);
 #endif
