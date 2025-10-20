@@ -1,4 +1,5 @@
-
+#include "rmfs.h"
+#include "notepad.h"
 #include "keyboard.h"
 #include "string.h"
 #include "vesa.h" 
@@ -85,6 +86,85 @@ void execute_command(char *input) {
         draw_string_scaled(10, (current_line + 3) * 20, "Shell: Basic command interpreter", COLOR_DARK_GREEN,2);
         current_line += 4;
     }
+
+// Add to execute_command function, after the existing commands:
+else if(mystrcmp(args[0], "edit") == 0) {
+    if (arg_count < 2) {
+        draw_string_scaled(10, (current_line + 1) * 20, "Usage: edit <filename>", COLOR_DARK_GREEN, 2);
+        current_line += 2;
+    } else {
+        // Launch notepad with the specified filename
+        notepad_loop(args[1]);
+        // Redraw shell after returning from notepad
+        fill_screen(COLOR_BLACK);
+        current_line = 1;
+        print_prompt();
+        return; // Skip the normal command processing
+    }
+}
+else if(mystrcmp(args[0], "ls") == 0 || mystrcmp(args[0], "dir") == 0) {
+    char file_list[1024];
+    list_files(file_list, sizeof(file_list));
+    
+    char *line = file_list;
+    char *next_line;
+    while (*line) {
+        next_line = line;
+        while (*next_line && *next_line != '\n') next_line++;
+        if (*next_line == '\n') {
+            *next_line = '\0';
+            next_line++;
+        }
+        
+        draw_string_scaled(10, (current_line + 1) * 20, line, COLOR_DARK_GREEN, 2);
+        current_line++;
+        line = next_line;
+    }
+    if (current_line == 1) {
+        current_line += 2;
+    }
+}
+else if(mystrcmp(args[0], "cat") == 0) {
+    if (arg_count < 2) {
+        draw_string_scaled(10, (current_line + 1) * 20, "Usage: cat <filename>", COLOR_DARK_GREEN, 2);
+        current_line += 2;
+    } else {
+        if (file_exists(args[1])) {
+            char file_content[NOTEPAD_BUFFER_SIZE];
+            int bytes_read = read_files(args[1], file_content, sizeof(file_content) - 1);
+            if (bytes_read > 0) {
+                file_content[bytes_read] = '\0';
+                draw_string_scaled(10, (current_line + 1) * 20, file_content, COLOR_BLUE, 2);
+                current_line += 2;
+            }
+        } else {
+            char error_msg[64];
+            mystrcpy(error_msg, "File not found: ");
+            mystrcat(error_msg, args[1]);
+            draw_string_scaled(10, (current_line + 1) * 20, error_msg, COLOR_DARK_GREEN, 2);
+            current_line += 2;
+        }
+    }
+}
+else if(mystrcmp(args[0], "rm") == 0 || mystrcmp(args[0], "del") == 0) {
+    if (arg_count < 2) {
+        draw_string_scaled(10, (current_line + 1) * 20, "Usage: rm <filename>", COLOR_DARK_GREEN, 2);
+        current_line += 2;
+    } else {
+        if (delete_files(args[1]) == 0) {
+            char success_msg[64];
+            mystrcpy(success_msg, "Deleted: ");
+            mystrcat(success_msg, args[1]);
+            draw_string_scaled(10, (current_line + 1) * 20, success_msg, COLOR_DARK_GREEN, 2);
+        } else {
+            char error_msg[64];
+            mystrcpy(error_msg, "File not found: ");
+            mystrcat(error_msg, args[1]);
+            draw_string_scaled(10, (current_line + 1) * 20, error_msg, COLOR_DARK_GREEN, 2);
+        }
+        current_line += 2;
+    }
+}
     else {
         char error_msg[64];
         mystrcpy(error_msg, "Unknown command: ");
@@ -161,15 +241,15 @@ while (1) {
         }
         // Handle backspace - try all possible backspace codes
         else if (c == '\b' || c == 127 || c == 0x08 || c == 0x7F) {
-            fill_rect(400, 420, 300, 20, 0x00FFFFFF);
+            //fill_rect(400, 420, 300, 20, COLOR_BLACK);
             //draw_string(400, 420, "Backspace detected!", 0xFFFF0000);
             
             if (cursor_pos > 0) {
                 cursor_pos--;
                 cmd_buffer[cursor_pos] = '\0';
                 // Redraw command line to show updated text
-                fill_rect(10 + 80, current_line * 20, 200, 20, 0x00FFFFFF);
-                draw_string_scaled(20 + 160, current_line * 20, cmd_buffer, 0xFF000000,2);
+                fill_rect(100 + 80, current_line * 20, 200, 20, COLOR_BLACK);
+                draw_string_scaled(20 + 160, current_line * 20, cmd_buffer, COLOR_BLACK,2);
             }
         }
         // Handle escape (return to dashboard)

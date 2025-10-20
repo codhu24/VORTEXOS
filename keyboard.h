@@ -8,4 +8,8 @@ char keyboard_getchar();
 int keyboard_has_input();
 const char* keyboard_get_buffer();
 void keyboard_clear_buffer();
+int keyboard_ctrl_pressed(void);
+int keyboard_shift_pressed(void);
+int keyboard_alt_pressed(void);
+
 #endif
