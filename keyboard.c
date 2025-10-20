@@ -33,6 +33,19 @@ static int control_pressed=0;
 static int alt_pressed=0;
 static char intput_buff[256];
 static int buff_ind=0;
+// Add these functions at the end of keyboard.c:
+
+int keyboard_ctrl_pressed(void) {
+    return control_pressed;
+}
+
+int keyboard_shift_pressed(void) {
+    return shift_pressed;
+}
+
+int keyboard_alt_pressed(void) {
+    return alt_pressed;
+}
 void keyboard_handler(struct interrupt_frame *frame)
 {
 uint8_t scancode =inb(KEYBOARD_DATA_PORT);

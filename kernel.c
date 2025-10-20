@@ -7,7 +7,8 @@
 #include "shell.h"
 #include "snakegame.h"
 #include "timer.h"
-
+#include "rmfs.h"
+#include "notepad.h"
 extern uint32_t stack_top;
 void draw_dashboard(void);
 int handle_dashboard_input(void);
@@ -102,11 +103,12 @@ void draw_dashboard(void) {
     draw_string(335, 200, "(Press G)", 0xFFFFFF00);
     
     // Draw other placeholder icons (you can add more later)
-   
+   draw_notepad_icon(500, 150);
+    draw_string(490, 180, "Notepad", 0xFFFFFFFF);
+    draw_string(485, 200, "(Press N)", 0xFFFFFF00);
     
-    // Draw instructions
-    draw_string(300, 400, "Press 'S' to launch Shell", 0xFFFFFF00);
-    draw_string(300, 420, "Press 'Q' to quit applications", 0xFFFFFF00);
+    // Update instructions
+    draw_string(300, 400, "Press 'S' for Shell, 'G' for Snake Game, 'N' for Notepad", 0xFFFFFF00);
 }
 
 void kernel_main(uint32_t magic, uint32_t mb_info) {
@@ -117,6 +119,7 @@ void kernel_main(uint32_t magic, uint32_t mb_info) {
     pic_remap();
         init_keyboard();
 init_timer(100);
+rmfs_init();
     for (int i = 0; i < 16; i++) {
         {pic_set_mask(i);}
     }
@@ -147,6 +150,11 @@ init_timer(100);
             else if(c=='g'||c=='G')
             {
                 snake_game_loop();
+                draw_dashboard();
+            }
+            else if(c=='N'|| c=='n')
+            {
+                notepad_loop("notes.txt");
                 draw_dashboard();
             }
             else if (c == 'q' || c == 'Q') {
