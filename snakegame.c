@@ -328,7 +328,16 @@ void snake_handle_input(snake_game_t *game, char key) {
     }
 }
 
-void snake_game_loop(void) {
+void snake_game_loop(void)
+{
+    snake_game_t game;
+    snake_init(&game);
+    
+    // Center the game on screen
+    int x = (fb.width - GRID_WIDTH * CELL_SIZE) / 2;
+    int y = (fb.height - GRID_HEIGHT * CELL_SIZE) / 2 - 50;
+    
+    // Clear screen only once at start
     fill_screen(COLOR_BLACK);
     draw_string_scaled(100, 100, "Press enter to start game", COLOR_BLUE, 2);
     

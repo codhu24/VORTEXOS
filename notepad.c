@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 // #include "notepad.h"
 // #include "vesa.h"
 // #include "keyboard.h"
@@ -215,6 +216,8 @@
 //     }
 // }
 
+=======
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
 #include "notepad.h"
 #include "vesa.h"
 #include "keyboard.h"
@@ -226,7 +229,10 @@ static char notepad_buffer[NOTEPAD_BUFFER_SIZE];
 static int cursor_pos = 0;
 static int scroll_offset = 0;
 static char current_filename[MAX_FILENAME_LENGTH] = "notes.txt";
+<<<<<<< HEAD
 static int needs_redraw = 1; // Add redraw flag
+=======
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
 
 void notepad_draw_interface(const char *filename) {
     fill_screen(COLOR_BLACK);
@@ -299,7 +305,11 @@ void notepad_draw_text(void) {
 int get_filename_from_user(char *filename_buffer) {
     char input_buffer[MAX_FILENAME_LENGTH] = "";
     int input_pos = 0;
+<<<<<<< HEAD
     fill_rect(300 + 17*16, 300, 400, 30, COLOR_PASTEL_YELLOW);
+=======
+                    fill_rect(300 + 17*16, 300, 400, 30, COLOR_PASTEL_YELLOW);
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
 
     fill_screen(COLOR_PASTEL_YELLOW);
     draw_string_scaled(200, 300, "Enter File name: ", COLOR_DIM_GRAY, 3);
@@ -323,9 +333,16 @@ int get_filename_from_user(char *filename_buffer) {
                     input_buffer[input_pos] = '\0';
                     
                     // Redraw filename input area
+<<<<<<< HEAD
                     fill_rect(350 + 17*16, 300, 400, 30, COLOR_PASTEL_YELLOW);
                     draw_string_scaled(350 + 17*16, 300, input_buffer, COLOR_BLACK, 3);
                 }
+=======
+                                        fill_rect(350 + 17*16, 300, 400, 30, COLOR_PASTEL_YELLOW);
+                    draw_string_scaled(350 + 17*16, 300, input_buffer, COLOR_BLACK, 3);
+                    
+                                    }
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
             }
             else if(c >= 32 && c <= 126 && input_pos < MAX_FILENAME_LENGTH - 1) { // Printable characters
                 input_buffer[input_pos] = c;
@@ -334,6 +351,12 @@ int get_filename_from_user(char *filename_buffer) {
                 
                 // Redraw filename input area
                 draw_string_scaled(350 + 17*16, 300, input_buffer, COLOR_BLACK, 3);
+<<<<<<< HEAD
+=======
+                
+                // Draw cursor
+              
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
             }
         }
     }
@@ -358,7 +381,10 @@ void notepad_loop(const char *default_filename) {
     cursor_pos = 0;
     notepad_buffer[0] = '\0';
     scroll_offset = 0;
+<<<<<<< HEAD
     needs_redraw = 1; // Initialize redraw flag
+=======
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
     
     // Try to load existing file
     if (file_exists(current_filename)) {
@@ -373,8 +399,12 @@ void notepad_loop(const char *default_filename) {
     notepad_draw_text(); // Draw initial text
     
     while (1) {
+<<<<<<< HEAD
         // Process all buffered key presses first
         while (keyboard_has_input()) {
+=======
+        if (keyboard_has_input()) {
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
             char c = keyboard_getchar();
             
             // Handle Ctrl+S combination using keyboard driver's state
@@ -409,20 +439,29 @@ void notepad_loop(const char *default_filename) {
                 if (cursor_pos > 0) {
                     cursor_pos--;
                     notepad_buffer[cursor_pos] = '\0';
+<<<<<<< HEAD
                     needs_redraw = 1; // Set flag instead of immediate redraw
+=======
+                    notepad_draw_text();
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
                 }
             }
             else if (c == '\n') { // Enter key
                 if (cursor_pos < NOTEPAD_BUFFER_SIZE - 1) {
                     notepad_buffer[cursor_pos++] = '\n';
                     notepad_buffer[cursor_pos] = '\0';
+<<<<<<< HEAD
                     needs_redraw = 1; // Set flag instead of immediate redraw
+=======
+                    notepad_draw_text();
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
                 }
             }
             else if (c >= 32 && c <= 126) { // Printable characters
                 if (cursor_pos < NOTEPAD_BUFFER_SIZE - 1) {
                     notepad_buffer[cursor_pos++] = c;
                     notepad_buffer[cursor_pos] = '\0';
+<<<<<<< HEAD
                     needs_redraw = 1; // Set flag instead of immediate redraw
                 }
             }
@@ -437,4 +476,31 @@ void notepad_loop(const char *default_filename) {
         // Halt CPU when no input to reduce CPU usage
         asm volatile("hlt");
     }
+=======
+                    notepad_draw_text();
+                }
+            }
+        }
+    }
+}
+
+void draw_notepad_icon(int x, int y) {
+    uint32_t bg_color = 0xFF1a1a3a;    // Dark blue
+    uint32_t paper_color = 0xFFFFFFFF;  // White
+    uint32_t line_color = 0xFFEEEEEE;   // Light gray
+    
+    // Background
+    fill_rect(x, y, 48, 36, bg_color);
+    
+    // Notepad "paper"
+    fill_rect(x + 8, y + 6, 32, 24, paper_color);
+    
+    // Lines on paper
+    for (int i = 0; i < 5; i++) {
+        fill_rect(x + 10, y + 10 + i * 4, 28, 2, line_color);
+    }
+    
+    // Spiral binding
+    fill_rect(x + 6, y + 6, 2, 24, 0xFF888888);
+>>>>>>> d044cf8ee47b5701af43a01637930ed874f65cb6
 }
